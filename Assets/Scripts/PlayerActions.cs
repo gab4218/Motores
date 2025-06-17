@@ -6,6 +6,7 @@ public class PlayerActions : MonoBehaviour
 {
     public static PlayerActions instance { get; private set; }
     public Player player;
+    public Transform holdTransform;
     [SerializeField] private int _dmg;
     [SerializeField] private float _knockback;
     [SerializeField] private float _interactRange;

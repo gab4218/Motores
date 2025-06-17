@@ -19,7 +19,6 @@ public class Piece : MonoBehaviour, IInteractable
         _pickedUp = false;
     }
 
-
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
