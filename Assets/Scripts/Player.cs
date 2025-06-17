@@ -4,22 +4,19 @@ using UnityEngine;
 
 public class Player
 {
-    private int lifeMax;
     private float speed;
     private float speedSprint;
     private float jumpForce;
     private float groundRayLength;
     private LayerMask groundLayerMask;
-    private int lifeCurrent;
     private float speedCurrent;
     private Vector3 dir;
     private Rigidbody rb;
     private Ray groundRay;
     public static bool _board;
     private Transform transform;
-    public Player(int lifeMax, float speed, float speedSprint, float jumpForce, float groundRayLength, LayerMask groundLayerMask, Rigidbody rb, Transform transform)
+    public Player(float speed, float speedSprint, float jumpForce, float groundRayLength, LayerMask groundLayerMask, Rigidbody rb, Transform transform)
     {
-        this.lifeMax = lifeMax;
         this.speed = speed;
         this.speedSprint = speedSprint;
         this.jumpForce = jumpForce;
@@ -31,7 +28,6 @@ public class Player
 
     public void OnAwake()
     {
-        lifeCurrent = lifeMax;
         speedCurrent = speed;
         _board = false;
     }

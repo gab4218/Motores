@@ -5,16 +5,17 @@ using UnityEngine;
 public abstract class EnemyBase : MonoBehaviour
 {
     [SerializeField] protected int lifeMax;
-    [SerializeField] protected int lifeCurrent;
     [SerializeField] protected float speed;
-    [SerializeField] protected Transform playerTransform;
-    [SerializeField] protected Rigidbody rb;
+    protected Transform playerTransform;
+    protected Rigidbody rb;
+    protected Vector3 facing;
+    protected int lifeCurrent;
     protected Vector3 dir;
 
-    private void Awake()
+    protected virtual void Start()
     {
         lifeCurrent = lifeMax;
-        rb = GetComponentInChildren<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         playerTransform = PlayerActions.instance.transform;
     }
 
@@ -33,18 +34,17 @@ public abstract class EnemyBase : MonoBehaviour
         Destroy(gameObject);
     }
 
-    protected virtual Vector3 FindDirection(Vector3 _dir)
+    protected virtual void FindDirection(Vector3 position)
     {
-        return dir;
+        dir = position - transform.position;
+        dir.y = 0;
+        dir.Normalize();
     }
 
     protected virtual void Move(Vector3 _dir)
     {
-
-    }
-
-    protected void OnCollisionEnter(Collision collision)
-    {
-        
+        rb.velocity = _dir * speed;
+        facing = Vector3.Lerp(transform.forward, _dir, 0.2f);
+        transform.forward = facing;
     }
 }
