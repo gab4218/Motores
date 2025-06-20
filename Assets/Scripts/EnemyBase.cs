@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public abstract class EnemyBase : MonoBehaviour
 {
     [SerializeField] protected int lifeMax;
@@ -11,7 +12,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected Vector3 facing;
     protected int lifeCurrent;
     protected Vector3 dir;
-
+    
     protected virtual void Start()
     {
         lifeCurrent = lifeMax;
@@ -19,7 +20,7 @@ public abstract class EnemyBase : MonoBehaviour
         playerTransform = PlayerActions.instance.transform;
     }
 
-    public void DamageEnemy(int _dmg, float _knockback)
+    public virtual void DamageEnemy(int _dmg, float _knockback)
     {
         lifeCurrent -= _dmg;
         rb.AddForce(-dir * _knockback, ForceMode.Impulse);
