@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sudoku : MonoBehaviour
+public class Sudoku : Board
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int[,] boardState;
+    public int[,] fullBoard;
 
-    // Update is called once per frame
-    void Update()
+
+    public override bool CheckBoard()
     {
-        
+        return true;
+    }
+    public override void InputValues(int val, int[] gridPos)
+    {
+        boardState[gridPos[0], gridPos[1]] = val;
     }
 }

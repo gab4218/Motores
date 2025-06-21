@@ -2,17 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Fungi : MonoBehaviour, IInteractable, ISpawnable
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Board _board;
+    private Spawner _creator;
+
+    public void OnClick()
     {
-        
+        if (_board.CheckBoard())
+        {
+            Debug.Log("Board done correctly");
+        }
+        else
+        {
+            Debug.Log("Board done incorrectly");
+        }
+        _creator.Create();
+        Destroy(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnRelease()
     {
-        
+        return;
+    }
+
+    public void AssignSpawn(Spawner s)
+    {
+        _creator = s;
     }
 }

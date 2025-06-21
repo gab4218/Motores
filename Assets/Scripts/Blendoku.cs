@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Blendoku : MonoBehaviour
+public class Blendoku : Board
 {
-    // Start is called before the first frame update
-    void Start()
+    public int[][][] boardState;
+    [SerializeField]
+    public int[][][] fullBoard { get; private set; }
+
+    public override bool CheckBoard()
     {
-        
+        return boardState == fullBoard;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void InputValues(int val, int[] hPos, int[] vPos)
     {
         
     }

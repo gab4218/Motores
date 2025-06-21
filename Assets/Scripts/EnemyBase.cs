@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public abstract class EnemyBase : MonoBehaviour
+public abstract class EnemyBase : MonoBehaviour, ISpawnable
 {
     [SerializeField] protected int lifeMax;
     [SerializeField] protected float speed;
@@ -12,6 +12,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected Vector3 facing;
     protected int lifeCurrent;
     protected Vector3 dir;
+    protected Spawner creator;
     
     protected virtual void Start()
     {
@@ -47,5 +48,10 @@ public abstract class EnemyBase : MonoBehaviour
         rb.velocity = _dir * speed;
         facing = Vector3.Lerp(transform.forward, _dir, 0.2f);
         transform.forward = facing;
+    }
+
+    public void AssignSpawn(Spawner p)
+    {
+        creator = p;
     }
 }

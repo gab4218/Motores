@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class ClassExtensions
+public interface ISpawnable
 {
-    
+    public void AssignSpawn(Spawner s);
 }

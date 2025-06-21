@@ -31,8 +31,18 @@ public abstract class Board : MonoBehaviour, IInteractable
 
     public abstract bool CheckBoard();
 
-    public abstract void InputValues<V>(V val, int[] position);
+    public virtual void InputValues(int val, int[] gridPos)
+    {
+        Debug.Log("Wrong one bucko");
+        return;
+    }
 
+    public virtual void InputValues(int val, int[] horizontalPos, int[] verticalPos)
+    {
+        Debug.Log("Wrong one bucko");
+        return;
+    }
+    
     public void OnClick()
     {
         CameraScript.instance.targetPos = _overviewCameraPosition;

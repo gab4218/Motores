@@ -10,8 +10,8 @@ public class Blocks : MonoBehaviour, IInteractable
     public bool canBeHeldByEnemy {  get; private set; } = true;
     public Rigidbody _rb {  get; private set; }
     public Transform carrierTransform;
-    [SerializeField] public Board.BoardType type { get;}
-    [SerializeField] public int value { get; }
+    [SerializeField] public Board.BoardType type;
+    [SerializeField] public int value;
 
     public void OnClick()
     {

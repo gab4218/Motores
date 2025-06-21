@@ -1,21 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Slots : MonoBehaviour
+public abstract class Slots : MonoBehaviour
 {
-    private Board _board;
+    protected Board _board;
     private Blocks _block;
-    private int[] _position;
-    [SerializeField] public int[] slot { get; }
-
-    private void OnTriggerEnter(Collider other)
+    public int[] slot;
+    protected void OnTriggerEnter(Collider other)
     {
-        
+        if (_block != null) return;
+
         if (other.TryGetComponent(out Blocks b))
         {
-            _block = b;
-            
+            if (b.type == _board._boardType)
+            {
+                Trigger(b);
+                _block = b;
+            }
+
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (_block == null) return;
+        if (_block == other.GetComponent<Blocks>())
+        {
+            _block = null;
+        }
+    }
+
+    protected abstract void Trigger(Blocks block);
 }
