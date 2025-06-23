@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class SlotsBlendoku : Slots
 {
-    [SerializeField] private int[][] gridPosition;
-
+    [SerializeField] private int index;
     protected override void Trigger(Blocks block)
     {
         

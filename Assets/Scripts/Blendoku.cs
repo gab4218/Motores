@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class Blendoku : Board
 {
-    public int[][][] boardState;
+    public int[] horizontalsCurrent;
+    public int[] verticalsCurrent;
     [SerializeField]
-    public int[][][] fullBoard { get; private set; }
+    public int[] horizontalsFull;
+    public int[] verticalsFull;
 
     public override bool CheckBoard()
     {
-        return boardState == fullBoard;
+        return horizontalsCurrent == horizontalsFull && verticalsCurrent == verticalsFull;
     }
 
-    public override void InputValues(int val, int[] hPos, int[] vPos)
+
+
+    public override void InputValues(int val, bool horizontalVertical, int index)
     {
         
     }

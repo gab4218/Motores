@@ -8,28 +8,57 @@ public abstract class Board : MonoBehaviour, IInteractable
 {
 
     [SerializeField] protected Transform _overviewCameraPosition;
-    
+    [SerializeField] protected MeshRenderer _winMeshRenderer;
+    [SerializeField] protected MeshRenderer _thisMR;
+    [SerializeField] protected Animator _winAnim;
+    [SerializeField] protected Material _winMaterial;
     //Referenciar archivo paint pretty please 
-
+    protected bool _completed;
     public enum BoardType
     {
         Sudoku,
         Blendoku
     }
-    [SerializeField]
-    public BoardType _boardType
+    public BoardType _boardType;
+
+    protected virtual void Awake()
     {
-        get
-        {
-            return _boardType;
-        }
-        set
-        {
-            return;
-        }
+        _thisMR = GetComponent<MeshRenderer>();
+        CheckButton.onPress += LostThisOne;
     }
 
     public abstract bool CheckBoard();
+    protected virtual void Update()
+    {
+        if (!_completed)
+        {
+            if (CheckBoard())
+            {
+                _completed = true;
+                CheckButton.onPress -= LostThisOne;
+                CheckButton.onPress += WinThisOne;
+                Debug.Log("WonThisOne");
+            }
+        }
+    }
+
+    private void WinThisOne()
+    {
+        _thisMR.material.color = new Color(0.4f,1f,0.2f);
+        _winMeshRenderer.material = _winMaterial;
+        _winAnim.SetTrigger("win");
+        Fungi.hintCount = 0;
+    }
+    private void LostThisOne()
+    {
+        _thisMR.material.color = new Color(1f, 0.2f, 0.2f);
+        Invoke("BackToNormal", 2.0f);
+    }
+
+    private void BackToNormal()
+    {
+        _thisMR.material.color = Color.white;
+    }
 
     public virtual void InputValues(int val, int[] gridPos)
     {
@@ -37,7 +66,8 @@ public abstract class Board : MonoBehaviour, IInteractable
         return;
     }
 
-    public virtual void InputValues(int val, int[] horizontalPos, int[] verticalPos)
+
+    public virtual void InputValues(int val, bool horizontalVertical, int index)
     {
         Debug.Log("Wrong one bucko");
         return;

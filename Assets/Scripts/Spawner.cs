@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] GameObject spawnThing;
+    [SerializeField] private GameObject _spawnThing;
 
     public void Create()
     {
-        Instantiate(spawnThing, transform).GetComponent<ISpawnable>().AssignSpawn(this);
+        Instantiate(_spawnThing, transform).GetComponent<ISpawnable>().AssignSpawn(this);
     }
 }

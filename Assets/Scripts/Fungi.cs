@@ -1,23 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class Fungi : MonoBehaviour, IInteractable, ISpawnable
+public class Fungi : MonoBehaviour, IInteractable
 {
     [SerializeField] private Board _board;
     private Spawner _creator;
+    public static int hintCount = 0;
+    [SerializeField] private Dictionary<int, string> _hints;
+    [SerializeField] private TMP_Text _hintText;
 
     public void OnClick()
     {
         if (_board.CheckBoard())
         {
-            Debug.Log("Board done correctly");
+            _hintText.text = "You completed the board correctly!";
         }
         else
         {
-            Debug.Log("Board done incorrectly");
+            _hintText.text = _hints[hintCount];
         }
-        _creator.Create();
         Destroy(gameObject);
     }
 
@@ -26,8 +29,4 @@ public class Fungi : MonoBehaviour, IInteractable, ISpawnable
         return;
     }
 
-    public void AssignSpawn(Spawner s)
-    {
-        _creator = s;
-    }
 }

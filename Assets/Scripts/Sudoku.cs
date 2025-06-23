@@ -10,7 +10,7 @@ public class Sudoku : Board
 
     public override bool CheckBoard()
     {
-        return true;
+        return boardState == fullBoard;
     }
     public override void InputValues(int val, int[] gridPos)
     {

@@ -8,7 +8,7 @@ public abstract class Slots : MonoBehaviour
 {
     protected Board _board;
     private Blocks _block;
-    public int[] slot;
+    
     protected void OnTriggerEnter(Collider other)
     {
         if (_block != null) return;
