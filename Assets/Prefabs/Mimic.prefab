@@ -290,8 +290,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4945026758671592402}
   - component: {fileID: 6641424695821816776}
-  - component: {fileID: 8911367717575616597}
-  - component: {fileID: 2229148216875398375}
+  - component: {fileID: 3913289313973963283}
+  - component: {fileID: 7949622150579891286}
   m_Layer: 0
   m_Name: Mimic
   m_TagString: Untagged
@@ -339,21 +339,7 @@ CapsuleCollider:
   m_Height: 3.3359735
   m_Direction: 1
   m_Center: {x: 0, y: 1.5988024, z: 0}
---- !u!114 &8911367717575616597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6321684506053267620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30b824f2b187a0f44a9d432ddba0c429, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifeMax: 3
-  speed: 0
---- !u!54 &2229148216875398375
+--- !u!54 &3913289313973963283
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -378,8 +364,22 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7949622150579891286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6321684506053267620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30b824f2b187a0f44a9d432ddba0c429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeMax: 3
+  speed: 1
 --- !u!1 &6423550233955963398
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class EnemySpider : EnemyBase
 {
+    [SerializeField] private Transform _nest;
     [SerializeField] private float _attackRange;
     [SerializeField] private float _playerDetect;
-    private float _webTimer;
-    private bool _canAttack;
+    [SerializeField] private float _webTimer;
+    [SerializeField] private float _maxCooldown;
+    [SerializeField] private Collider _webCollider;
     private float _cooldown;
+    private bool _canAttack;
+    [SerializeField] private bool _chasingPlayer = false;
 
     protected override void Start()
     {
         base.Start();
-        _webTimer = 0;
-        _canAttack = false;
+        
+        _canAttack = true;
         _cooldown = 0;
+        _webCollider.enabled = false;
     }
 
     private void Update()
@@ -24,37 +29,65 @@ public class EnemySpider : EnemyBase
         {
             _cooldown -= Time.deltaTime;
         }
-        if (_cooldown <= 0)
+        else if (_cooldown < 0)
         {
             _cooldown = 0;
             _canAttack = true;
         }
+
+        if (Vector3.Distance(PlayerActions.instance.transform.position, transform.position) <= _attackRange && _canAttack && !stunned)
+        {
+            _webCollider.enabled = true;
+        }
     }
+
+    
 
     private void FixedUpdate()
     {
-        FindDirection(PlayerActions.instance.transform.position);
-        if (Vector3.Distance(PlayerActions.instance.transform.position, transform.position) <= _playerDetect)
+        if (_chasingPlayer)
         {
+            FindDirection(PlayerActions.instance.transform.position);
+
             Move(dir);
+        }
+        else
+        {
+            FindDirection(_nest.position);
+            Move(dir);
+            if (PlayerActions.instance.webbedTimer > 0 && Vector3.Distance(PlayerActions.instance.transform.position, transform.position) <= _playerDetect)
+            {
+                PlayerActions.instance.player.rb.velocity = dir * speed;
+            }
+            else
+            {
+                _chasingPlayer = true;
+            }
+        }
+        
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_canAttack && _webCollider.enabled)
+        {
+            if(other.GetComponent<PlayerActions>())
+            {
+                _cooldown = _maxCooldown;
+                ApplyEffect();
+                _webCollider.enabled = false;
+            }
         }
     }
 
     private void ApplyEffect()
     {
-        if (_cooldown <= 0 && _canAttack == true)
+        if (_canAttack == true)
         {
-            _webTimer = 30f;
             PlayerActions.instance.GetWebbed(_webTimer);
             _canAttack = false;
-        }
-    }
-
-    private void ReadyAttack()
-    {
-        if (_canAttack == false)
-        {
-            _cooldown = Random.Range(40f, 80f);
+            _chasingPlayer = false;
         }
     }
 }

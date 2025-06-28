@@ -13,7 +13,7 @@ public abstract class EnemyBase : MonoBehaviour, ISpawnable
     protected int lifeCurrent;
     protected Vector3 dir;
     protected Spawner creator;
-    
+    protected bool stunned = false;
     protected virtual void Start()
     {
         lifeCurrent = lifeMax;
@@ -21,14 +21,26 @@ public abstract class EnemyBase : MonoBehaviour, ISpawnable
         playerTransform = PlayerActions.instance.transform;
     }
 
+    public void PermaStun()
+    {
+        stunned = true;
+    }
+
     public virtual void DamageEnemy(int _dmg, float _knockback)
     {
         lifeCurrent -= _dmg;
-        rb.AddForce(-dir * _knockback, ForceMode.Impulse);
+        rb.AddForce((transform.up/2 - dir) * _knockback, ForceMode.Impulse);
+        stunned = true;
+        Invoke("Destun", 0.7f);
         if (lifeCurrent <= 0)
         {
             Die();
         }
+    }
+
+    protected void Destun()
+    {
+        stunned = false;
     }
 
     public virtual void Die()
@@ -45,7 +57,8 @@ public abstract class EnemyBase : MonoBehaviour, ISpawnable
 
     protected virtual void Move(Vector3 _dir)
     {
-        rb.velocity = _dir * speed;
+        if (stunned) return;
+        rb.velocity = _dir * speed + rb.velocity.y * transform.up;
         facing = Vector3.Lerp(transform.forward, _dir, 0.2f);
         transform.forward = facing;
     }

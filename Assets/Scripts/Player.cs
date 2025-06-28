@@ -11,7 +11,7 @@ public class Player
     private LayerMask groundLayerMask;
     private float speedCurrent;
     private Vector3 dir;
-    private Rigidbody rb;
+    public Rigidbody rb;
     private Ray groundRay;
     public static bool _board;
     private Transform transform;

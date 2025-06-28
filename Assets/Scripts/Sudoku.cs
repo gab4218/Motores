@@ -4,8 +4,20 @@ using UnityEngine;
 
 public class Sudoku : Board
 {
+
+    [SerializeField]
+    SudokuRow[] rows;
+
     public int[,] boardState;
     public int[,] fullBoard;
+
+    protected override void Awake()
+    {
+        //for ()
+        {
+
+        }
+    }
 
 
     public override bool CheckBoard()
@@ -16,4 +28,9 @@ public class Sudoku : Board
     {
         boardState[gridPos[0], gridPos[1]] = val;
     }
+}
+public struct SudokuRow
+{
+    public int[] fullRow;
+    public int[] startingRow;
 }

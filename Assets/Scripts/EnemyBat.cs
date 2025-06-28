@@ -28,7 +28,7 @@ public class EnemyBat : EnemyBase
                 _selectedBlock = null;
             }
         }
-        else
+        else if(_holdingBlock)
         {
             _holdingBlock = false;
         }
@@ -41,27 +41,40 @@ public class EnemyBat : EnemyBase
     public override void Die()
     {
         _holdingBlock = false;
-        _selectedBlock.carrierTransform = null;
-        _selectedBlock.isHeld = false;
-        _selectedBlock._rb.useGravity = true;
+        if (_selectedBlock != null)
+        {
+            _selectedBlock.carrierTransform = null;
+            _selectedBlock.isHeld = false;
+            _selectedBlock._rb.useGravity = true;
+        }
         base.Die();
     }
 
     public override void DamageEnemy(int _dmg, float _knockback)
     {
         _holdingBlock = false;
-        _selectedBlock.carrierTransform = null;
-        _selectedBlock.isHeld = false;
-        _selectedBlock._rb.useGravity = true;
+        FindDirection(PlayerActions.instance.transform.position);
+        if (_selectedBlock != null)
+        {
+            _selectedBlock.carrierTransform = null;
+            _selectedBlock.isHeld = false;
+            _selectedBlock._rb.useGravity = true;
+        }
         base.DamageEnemy(_dmg, _knockback);
     }
     
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (_holdingBlock)
+        if (_holdingBlock || stunned)
         {
             return;
         }
+
+        if (Vector3.Distance(transform.position, _den.position) <= 0.25f)
+        {
+            return;
+        }
+
         if (other.TryGetComponent(out Blocks b) && b.canBeHeldByEnemy)
         {
             _selectedBlock = b;

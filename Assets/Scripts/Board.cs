@@ -67,7 +67,7 @@ public abstract class Board : MonoBehaviour, IInteractable
     }
 
 
-    public virtual void InputValues(int val, bool horizontalVertical, int index)
+    public virtual void InputValues(int val, int index)
     {
         Debug.Log("Wrong one bucko");
         return;

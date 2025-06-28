@@ -144,6 +144,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2586259355954974351}
   - component: {fileID: 6717496100946013804}
+  - component: {fileID: 1825554044878305908}
+  - component: {fileID: 2514184879959967184}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Untagged
@@ -166,6 +168,7 @@ Transform:
   m_Children:
   - {fileID: 8634623955933913356}
   - {fileID: 2985307626527649848}
+  - {fileID: 6044321134037063098}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6717496100946013804
@@ -189,6 +192,45 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.2473066, y: 1.667619, z: 2.9755943}
   m_Center: {x: 0, y: 0.8307174, z: 0}
+--- !u!114 &1825554044878305908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277432956422576806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb8222bd12d23bd488b10568238510ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 2
+  _weaponScript: {fileID: 2514184879959967184}
+  _finalPos: {fileID: 0}
+  _grabCollider: {fileID: 6717496100946013804}
+  _position: {x: 0, y: 0, z: 0}
+--- !u!114 &2514184879959967184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277432956422576806}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608eef2ab3c01c04a98e1889307e036e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _frogRayLength: 15
+  _maxCooldown: 15
+  _grabTransform: {fileID: 0}
+  _meshObject: {fileID: 5019062597246053203}
+  _tongue: {fileID: 475410914824258222, guid: 1315f345a67dadf4bbe529b3f0afe476, type: 3}
+  _tonguePoint: {fileID: 6044321134037063098}
+  _tongueEnd: {x: 0, y: 0, z: 0}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 2147483665
 --- !u!1 &329645246498963640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1291,6 +1333,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3563104191373622209}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7873096951683639535
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6044321134037063098}
+  m_Layer: 0
+  m_Name: TongueSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6044321134037063098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7873096951683639535}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.81, z: 1.45}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2586259355954974351}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8083193135961967814
 GameObject:

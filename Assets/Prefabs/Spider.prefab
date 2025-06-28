@@ -1373,6 +1373,7 @@ GameObject:
   - component: {fileID: 7610408913606091508}
   - component: {fileID: 2358773896094254781}
   - component: {fileID: 2817337148797707912}
+  - component: {fileID: 936003249711574970}
   m_Layer: 0
   m_Name: Spider
   m_TagString: Untagged
@@ -1459,8 +1460,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeMax: 10
   speed: 2
-  _attackRange: 0
-  _playerDetect: 0
+  _nest: {fileID: 0}
+  _attackRange: 5
+  _playerDetect: 6
+  _webTimer: 30
+  _maxCooldown: 15
+  _webCollider: {fileID: 936003249711574970}
+  _chasingPlayer: 0
+--- !u!65 &936003249711574970
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010235682785869194}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 32768
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 2147484215
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.9457817, y: 2.352341, z: 5.1175427}
+  m_Center: {x: 0, y: 1.0068545, z: 2.0587707}
 --- !u!1 &6143305097573700436
 GameObject:
   m_ObjectHideFlags: 0

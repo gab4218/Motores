@@ -27,7 +27,6 @@ public class Blocks : MonoBehaviour, IInteractable
     {
         if (carrierTransform == PlayerActions.instance.holdTransform)
         { 
-            _rb.velocity = Vector3.zero;
             isHeld = false;
             _rb.useGravity = true;
             PlayerActions.instance.heldItemTransform = null;
