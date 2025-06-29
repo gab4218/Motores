@@ -7,20 +7,35 @@ public class Fungi : MonoBehaviour, IInteractable
 {
     [SerializeField] private Board _board;
     private Spawner _creator;
-    public static int hintCount = 0;
-    [SerializeField] private Dictionary<int, string> _hints;
+    [SerializeField] private string[] _hints;
     [SerializeField] private TMP_Text _hintText;
+    private bool opened = false;
 
     public void OnClick()
     {
+        if (opened) return;
+
         if (_board.CheckBoard())
         {
             _hintText.text = "You completed the board correctly!";
         }
         else
         {
-            _hintText.text = _hints[hintCount];
+            if (_board.hintCount < _hints.Length)
+            {
+                _hintText.gameObject.SetActive(true);
+                _hintText.text = _hints[_board.hintCount];
+                _board.hintCount++;
+                opened = true;
+                Invoke("WaitDestroy", 5f);
+            }
         }
+        
+    }
+
+    private void WaitDestroy()
+    {
+        _hintText.gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
@@ -30,3 +45,5 @@ public class Fungi : MonoBehaviour, IInteractable
     }
 
 }
+
+

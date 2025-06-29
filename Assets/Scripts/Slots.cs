@@ -6,7 +6,7 @@ using UnityEngine;
 
 public abstract class Slots : MonoBehaviour
 {
-    protected Board _board;
+    public Board board;
     private Blocks _block;
     
     protected void OnTriggerEnter(Collider other)
@@ -15,22 +15,27 @@ public abstract class Slots : MonoBehaviour
 
         if (other.TryGetComponent(out Blocks b))
         {
-            if (b.type == _board._boardType)
+            if (b.type == board._boardType)
             {
-                Trigger(b);
                 _block = b;
+                Trigger(_block);
+                
             }
-
+            
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (_block == null) return;
+
         if (_block == other.GetComponent<Blocks>())
         {
+            TriggerExit();
             _block = null;
         }
     }
 
     protected abstract void Trigger(Blocks block);
+
+    protected abstract void TriggerExit();
 }

@@ -41,7 +41,6 @@ public class Blocks : MonoBehaviour, IInteractable
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        
     }
     
     private void FixedUpdate()
@@ -50,7 +49,8 @@ public class Blocks : MonoBehaviour, IInteractable
         {
             _rb.MovePosition(Vector3.Lerp(transform.position, carrierTransform.position, 0.25f));
         }
-
+        
+        
     }
 
     

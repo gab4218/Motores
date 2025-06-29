@@ -148,7 +148,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4586444591600750072, guid: 1b350d1b1e0631143a650ec92a32c6bd, type: 3}
+  - {fileID: 2100000, guid: 584ed124552745c4e8db3e461fa199e8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -378,8 +378,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b824f2b187a0f44a9d432ddba0c429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeMax: 3
-  speed: 1
+  lifeMax: 25
+  speed: 0
 --- !u!1 &6423550233955963398
 GameObject:
   m_ObjectHideFlags: 0

@@ -75,16 +75,19 @@ public class CameraScript : MonoBehaviour
     private IEnumerator InterpolateCameraView()
     {
         float t = 0;
-        Transform ot = transform;
+        Vector3 otp = transform.position;
+        Quaternion otr = transform.rotation;
+        _isInterpolating = true;
         while (t < 1)
         {
-            transform.position = Vector3.Lerp(ot.position, targetPos.position, t);
-            transform.rotation = Quaternion.Lerp(ot.rotation, targetPos.rotation, t);
+            transform.position = Vector3.Lerp(otp, targetPos.position, t);
+            transform.rotation = Quaternion.Lerp(otr, targetPos.rotation, t);
             t += Time.deltaTime;
             yield return null;
         }
         transform.position = targetPos.position;
         transform.rotation = targetPos.rotation;
+        _isInterpolating = false;
     }
 
     private void MoveCamera()

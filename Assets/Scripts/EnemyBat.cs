@@ -7,10 +7,26 @@ public class EnemyBat : EnemyBase
 {
     [SerializeField] private Transform _holdPos;
     [SerializeField] private Transform _den;
-    private Transform _target;
+    private Transform _placeholder;
+    [SerializeField] private Transform _target;
     private bool _holdingBlock;
     private bool _stunned;
     private Blocks _selectedBlock;
+    GameObject[] _blockGO;
+    Transform[] _blockTransforms;
+
+
+    private void Awake()
+    {
+        _blockGO = GameObject.FindGameObjectsWithTag("num");
+        _placeholder = GameObject.FindWithTag("placeholder").transform;
+        _blockTransforms = new Transform[_blockGO.Length];
+        for (int i = 0; i < _blockTransforms.Length; i++)
+        {
+            _blockTransforms[i] = _blockGO[i].transform;
+        }
+    }
+
     private void Update()
     {
         if (_target != PlayerActions.instance.heldItemTransform && PlayerActions.instance.heldItemTransform != null && !_holdingBlock)
@@ -20,6 +36,7 @@ public class EnemyBat : EnemyBase
         else if(_holdingBlock && _selectedBlock.carrierTransform == _holdPos)
         {
             _target = _den;
+
             if (Vector3.Distance(transform.position, _den.position) <= 0.05f)
             {
                 _holdingBlock = false;
@@ -32,6 +49,19 @@ public class EnemyBat : EnemyBase
         {
             _holdingBlock = false;
         }
+        else if (_target == _den || _target == null)
+        {
+            Transform closest = _placeholder;
+            foreach (Transform t in _blockTransforms)
+            {
+                if (Vector3.Distance(transform.position, closest.position) > Vector3.Distance(transform.position, t.position) && Vector3.Distance(transform.position, t.position) > 15)
+                {
+                    closest = t;
+                }
+            }
+            _target = closest;
+        }
+        
         if (!_stunned && _target != null)
         {
             FindDirection(_target.position);
@@ -62,7 +92,13 @@ public class EnemyBat : EnemyBase
         }
         base.DamageEnemy(_dmg, _knockback);
     }
-    
+
+    public override void AssignSpawn(Spawner p)
+    {
+        base.AssignSpawn(p);
+        _den = p.transform;
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (_holdingBlock || stunned)
@@ -70,7 +106,7 @@ public class EnemyBat : EnemyBase
             return;
         }
 
-        if (Vector3.Distance(transform.position, _den.position) <= 0.25f)
+        if (Vector3.Distance(transform.position, _den.position) <= 1f)
         {
             return;
         }
@@ -81,6 +117,7 @@ public class EnemyBat : EnemyBase
             _selectedBlock.carrierTransform = _holdPos;
             _selectedBlock.isHeld = true;
             _selectedBlock._rb.useGravity = false;
+            
             _holdingBlock = true;
         }
     }

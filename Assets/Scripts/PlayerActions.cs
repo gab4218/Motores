@@ -20,6 +20,7 @@ public class PlayerActions : MonoBehaviour
     public float webbedTimer;
     private float _blurredTimer;
     private PostProcessVolume _ppVolume;
+    private DepthOfField _blur;
     public event Action ClickAction;
     public enum WeaponType
     {
@@ -45,7 +46,8 @@ public class PlayerActions : MonoBehaviour
         player = new Player(_speed, _speedSprint, _jumpForce, _groundRayLength, _groundLayerMask, GetComponent<Rigidbody>(), transform);
         player.OnAwake();
         _ppVolume = Camera.main.gameObject.GetComponent<PostProcessVolume>();
-        _ppVolume.enabled = false;
+        _ppVolume.profile.TryGetSettings(out _blur);
+        _blur.active = false;
     }
 
     private void Update()
@@ -76,18 +78,19 @@ public class PlayerActions : MonoBehaviour
         if (_blurredTimer > 0)
         {
             _blurredTimer -= Time.deltaTime;
-            if (_ppVolume.enabled == false) _ppVolume.enabled = true;
+            if (_blur.active == false) _blur.active = true;
         }
         else if(_blurredTimer < 0)
         {
             _blurredTimer = 0;
-            _ppVolume.enabled = false;
+            _blur.active = false;
         }
     }
 
     private void FixedUpdate()
     {
-        if(webbedTimer <= 0) player.OnFixedUpdate();
+        if (CameraScript.instance.isOnBoard) return;
+        if (webbedTimer <= 0) player.OnFixedUpdate();
     }
 
     public void GetWebbed(float t)

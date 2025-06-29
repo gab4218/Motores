@@ -9,7 +9,11 @@ public class Blendoku : Board
 
     public override bool CheckBoard()
     {
-        return currentVals == fullVals;
+        for(int i = 0; i < currentVals.Length; i++)
+        {
+            if (currentVals[i] != fullVals[i]) return false;
+        }
+        return true;
     }
 
 

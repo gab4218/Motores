@@ -25,6 +25,8 @@ public class EnemySpider : EnemyBase
 
     private void Update()
     {
+        if (CameraScript.instance.isOnBoard) return;
+
         if (_cooldown > 0)
         {
             _cooldown -= Time.deltaTime;
@@ -45,6 +47,8 @@ public class EnemySpider : EnemyBase
 
     private void FixedUpdate()
     {
+        if (CameraScript.instance.isOnBoard) return;
+
         if (_chasingPlayer)
         {
             FindDirection(PlayerActions.instance.transform.position);
@@ -79,6 +83,12 @@ public class EnemySpider : EnemyBase
                 _webCollider.enabled = false;
             }
         }
+    }
+
+    public override void AssignSpawn(Spawner p)
+    {
+        base.AssignSpawn(p);
+        _nest = p.transform;
     }
 
     private void ApplyEffect()

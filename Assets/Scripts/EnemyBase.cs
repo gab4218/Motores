@@ -38,6 +38,8 @@ public abstract class EnemyBase : MonoBehaviour, ISpawnable
         }
     }
 
+
+
     protected void Destun()
     {
         stunned = false;
@@ -46,6 +48,11 @@ public abstract class EnemyBase : MonoBehaviour, ISpawnable
     public virtual void Die()
     {
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if(creator != null) creator.currentlyAlive--;
     }
 
     protected virtual void FindDirection(Vector3 position)
@@ -63,7 +70,7 @@ public abstract class EnemyBase : MonoBehaviour, ISpawnable
         transform.forward = facing;
     }
 
-    public void AssignSpawn(Spawner p)
+    public virtual void AssignSpawn(Spawner p)
     {
         creator = p;
     }

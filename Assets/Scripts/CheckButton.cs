@@ -9,7 +9,7 @@ public class CheckButton : MonoBehaviour, IInteractable
 
     public void OnClick()
     {
-        onPress.Invoke();
+        onPress?.Invoke();
     }
 
     public void OnRelease()

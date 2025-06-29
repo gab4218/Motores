@@ -13,6 +13,7 @@ public abstract class Board : MonoBehaviour, IInteractable
     [SerializeField] protected Animator _winAnim;
     [SerializeField] protected Material _winMaterial;
     //Referenciar archivo paint pretty please 
+    public int hintCount = 0;
     protected bool _completed;
     public enum BoardType
     {
@@ -32,7 +33,7 @@ public abstract class Board : MonoBehaviour, IInteractable
     {
         if (!_completed)
         {
-            if (CheckBoard())
+            if (CheckBoard() == true)
             {
                 _completed = true;
                 CheckButton.onPress -= LostThisOne;
@@ -44,15 +45,13 @@ public abstract class Board : MonoBehaviour, IInteractable
 
     private void WinThisOne()
     {
-        _thisMR.material.color = new Color(0.4f,1f,0.2f);
         _winMeshRenderer.material = _winMaterial;
         _winAnim.SetTrigger("win");
-        Fungi.hintCount = 0;
     }
     private void LostThisOne()
     {
         _thisMR.material.color = new Color(1f, 0.2f, 0.2f);
-        Invoke("BackToNormal", 2.0f);
+        Invoke("BackToNormal", 1.0f);
     }
 
     private void BackToNormal()
