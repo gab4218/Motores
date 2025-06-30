@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// Andrea Ferruelo
 public class EnemyMimic : EnemyBase, IInteractable
 {
     private bool _isDormant;

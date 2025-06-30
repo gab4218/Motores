@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+// Gabriel Benes
 public class sceneController : MonoBehaviour
 {
     public void GoToScene(string scene)

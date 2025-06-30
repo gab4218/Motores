@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
-
+// Andrea Ferruelo
 public class PlayerActions : MonoBehaviour
 {
     public static PlayerActions instance { get; private set; }

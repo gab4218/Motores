@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
-
+// Gabriel Benes
 public class Grab : MonoBehaviour
 {
     [SerializeField] private float _interactRange;

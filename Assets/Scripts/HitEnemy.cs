@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// Andrea Ferruelo
 public class HitEnemy : MonoBehaviour
 {
     [SerializeField] private int _dmg;

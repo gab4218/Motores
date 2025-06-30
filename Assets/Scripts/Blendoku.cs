@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// Gabriel Benes
 public class Blendoku : Board
 {
     public int[] currentVals;

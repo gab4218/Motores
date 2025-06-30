@@ -1,9 +1,8 @@
-using Palmmedia.ReportGenerator.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
-
+// Andrea Ferruelo
 public class FrogAttack : MonoBehaviour
 {
     private float _frogCooldown = 0;

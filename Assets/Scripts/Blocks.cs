@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+// Gabriel Benes
 public class Blocks : MonoBehaviour, IInteractable
 {
     [SerializeField] private float posInterpolationSpeed;

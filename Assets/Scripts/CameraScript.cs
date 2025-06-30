@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// Andrea Ferruelo
 public class CameraScript : MonoBehaviour
 {
     [SerializeField] private Transform _POVTransform;

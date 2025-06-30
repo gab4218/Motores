@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// Andrea Ferruelo
 [RequireComponent(typeof(Rigidbody))]
 public abstract class EnemyBase : MonoBehaviour, ISpawnable
 {

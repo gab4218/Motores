@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+// Gabriel Benes
 public abstract class Slots : MonoBehaviour
 {
     public Board board;

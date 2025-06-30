@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+// Gabriel Benes
 public abstract class Board : MonoBehaviour, IInteractable
 {
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+// Gabriel Benes
 public class Fungi : MonoBehaviour, IInteractable
 {
     [SerializeField] private Board _board;
