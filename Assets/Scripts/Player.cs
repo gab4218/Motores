@@ -30,6 +30,7 @@ public class Player
     {
         speedCurrent = speed;
         _board = false;
+        PlayerActions.instance.spacebarAction = Jump;
     }
 
     public void OnUpdate()
@@ -40,11 +41,6 @@ public class Player
         }
         dir = Input.GetAxisRaw("Horizontal") * transform.right + Input.GetAxisRaw("Vertical") * transform.forward;
         dir.Normalize();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Jump();
-        }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -80,6 +76,11 @@ public class Player
     private void Sprint()
     {
         speedCurrent *= speedSprint;
+    }
+
+    public void EndWebbed()
+    {
+        PlayerActions.instance.spacebarAction = Jump;
     }
 
     private bool IsGrounded()

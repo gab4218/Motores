@@ -13,6 +13,7 @@ public class EnemySpider : EnemyBase
     private float _cooldown;
     private bool _canAttack;
     [SerializeField] private bool _chasingPlayer = false;
+    
 
     protected override void Start()
     {
@@ -37,6 +38,8 @@ public class EnemySpider : EnemyBase
             _canAttack = true;
         }
 
+        
+
         if (Vector3.Distance(PlayerActions.instance.transform.position, transform.position) <= _attackRange && _canAttack && !stunned)
         {
             _webCollider.enabled = true;
@@ -59,7 +62,7 @@ public class EnemySpider : EnemyBase
         {
             FindDirection(_nest.position);
             Move(dir);
-            if (PlayerActions.instance.webbedTimer > 0 && Vector3.Distance(PlayerActions.instance.transform.position, transform.position) <= _playerDetect)
+            if (PlayerActions.instance.webbed && Vector3.Distance(PlayerActions.instance.transform.position, transform.position) <= _playerDetect)
             {
                 PlayerActions.instance.player.rb.velocity = dir * speed;
             }
@@ -95,9 +98,11 @@ public class EnemySpider : EnemyBase
     {
         if (_canAttack == true)
         {
-            PlayerActions.instance.GetWebbed(_webTimer);
+            WebManager.instance.GetWebbed(_webTimer);
             _canAttack = false;
             _chasingPlayer = false;
         }
     }
+
+    
 }

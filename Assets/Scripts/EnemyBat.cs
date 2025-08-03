@@ -7,25 +7,10 @@ public class EnemyBat : EnemyBase
 {
     [SerializeField] private Transform _holdPos;
     [SerializeField] private Transform _den;
-    private Transform _placeholder;
     [SerializeField] private Transform _target;
     private bool _holdingBlock;
     private bool _stunned;
     private Blocks _selectedBlock;
-    GameObject[] _blockGO;
-    Transform[] _blockTransforms;
-
-
-    private void Awake()
-    {
-        _blockGO = GameObject.FindGameObjectsWithTag("num");
-        _placeholder = GameObject.FindWithTag("placeholder").transform;
-        _blockTransforms = new Transform[_blockGO.Length];
-        for (int i = 0; i < _blockTransforms.Length; i++)
-        {
-            _blockTransforms[i] = _blockGO[i].transform;
-        }
-    }
 
     private void Update()
     {
@@ -51,10 +36,10 @@ public class EnemyBat : EnemyBase
         }
         else if (_target == _den || _target == null)
         {
-            Transform closest = _placeholder;
-            foreach (Transform t in _blockTransforms)
+            Transform closest = BlockData.placeholder;
+            foreach (Transform t in BlockData.blockTransforms)
             {
-                if (Vector3.Distance(transform.position, closest.position) > Vector3.Distance(transform.position, t.position) && Vector3.Distance(transform.position, t.position) > 15)
+                if (Vector3.Distance(transform.position, closest.position) > Vector3.Distance(transform.position, t.position) && Vector3.Distance(transform.position, t.position) > 20)
                 {
                     closest = t;
                 }

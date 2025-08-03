@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 // Andrea Ferruelo
 [RequireComponent(typeof(Rigidbody))]
-public abstract class EnemyBase : MonoBehaviour, ISpawnable
+public abstract class EnemyBase : MonoBehaviour, ISpawnable, IGrabbableByFrog
 {
     [SerializeField] protected int lifeMax;
     [SerializeField] protected float speed;
@@ -73,5 +73,25 @@ public abstract class EnemyBase : MonoBehaviour, ISpawnable
     public virtual void AssignSpawn(Spawner p)
     {
         creator = p;
+    }
+
+    public void Grab()
+    {
+        PermaStun();
+    }
+
+    public Collider[] GetColliders()
+    {
+        return GetComponents<Collider>();
+    }
+
+    public Transform GetTransform()
+    {
+        return transform;
+    }
+
+    public void End()
+    {
+        Die();
     }
 }

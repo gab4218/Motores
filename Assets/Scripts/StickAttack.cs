@@ -31,34 +31,11 @@ public class StickAttack : MonoBehaviour
             PlayerActions.instance.availableWeapons[PlayerActions.WeaponType.Stick] = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            if (PlayerActions.instance.availableWeapons.ContainsKey(PlayerActions.WeaponType.Stick) && PlayerActions.instance.selectedWeapon != PlayerActions.WeaponType.Stick)
-            {
-                PlayerActions.instance.ClickAction += Attack;
-                PlayerActions.instance.selectedWeapon = PlayerActions.WeaponType.Stick;
-                _meshObject.SetActive(true);
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            if (PlayerActions.instance.availableWeapons.ContainsKey(PlayerActions.WeaponType.Frog))
-            {
-                PlayerActions.instance.ClickAction -= Attack;
-                _meshObject.SetActive(false);
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            
-            PlayerActions.instance.ClickAction -= Attack;
-            _meshObject.SetActive(false);
-        }
     }
 
-    private void Attack()
+    public void Attack()
     {
-        if (PlayerActions.instance.webbedTimer > 0 || !PlayerActions.instance.availableWeapons[PlayerActions.WeaponType.Stick]) return;
+        if (PlayerActions.instance.webbed || !PlayerActions.instance.availableWeapons[PlayerActions.WeaponType.Stick]) return;
         _anim.SetTrigger("Hit");
         stickCollider.enabled = true;
         _stickCooldown = _maxCooldown;
@@ -66,6 +43,23 @@ public class StickAttack : MonoBehaviour
         Invoke("StickEnd", 0.5f);
 
     }
+
+    public void Select()
+    {
+        if (PlayerActions.instance.availableWeapons.ContainsKey(PlayerActions.WeaponType.Stick) && PlayerActions.instance.selectedWeapon != PlayerActions.WeaponType.Stick)
+        {
+            PlayerActions.instance.ClickAction = Attack;
+            PlayerActions.instance.selectedWeapon = PlayerActions.WeaponType.Stick;
+            _meshObject.SetActive(true);
+        }
+    }
+
+
+    public void Deselect()
+    {
+        if (PlayerActions.instance.availableWeapons.ContainsKey(PlayerActions.WeaponType.Stick)) _meshObject.SetActive(false);
+    }
+
     private void StickEnd()
     {
         stickCollider.enabled = false;

@@ -41,6 +41,7 @@ public class Blocks : MonoBehaviour, IInteractable
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        BlockData.blockTransforms.Add(transform);
     }
     
     private void FixedUpdate()

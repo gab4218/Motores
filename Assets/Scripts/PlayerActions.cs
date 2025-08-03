@@ -15,13 +15,19 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _groundRayLength;
     [SerializeField] private LayerMask _groundLayerMask;
-    [SerializeField] private GameObject _webbedImage;
-    [SerializeField] private RectTransform _webbedBar;
-    public float webbedTimer;
+    [SerializeField] private Grab _grab;
+    [SerializeField] private FrogAttack _frog;
+    [SerializeField] private StickAttack _stick;
     private float _blurredTimer;
     private PostProcessVolume _ppVolume;
     private DepthOfField _blur;
-    public event Action ClickAction;
+    public Action spacebarAction;
+    public Action ClickAction;
+    public bool webbed = false;
+
+
+
+
     public enum WeaponType
     {
         Hand, 
@@ -53,27 +59,39 @@ public class PlayerActions : MonoBehaviour
     private void Update()
     {
         if (CameraScript.instance.isOnBoard) return;
-        if (webbedTimer > 0)
-        {
-            EscapeWeb();
-            webbedTimer -= Time.deltaTime;
-            _webbedBar.sizeDelta = new Vector2(840f * webbedTimer / 30f, 68);
-            return;
-        }
-        else if (webbedTimer < 0)
-        {
-            webbedTimer = 0;
-            _webbedImage.SetActive(false);
-        }
+        
 
         player.OnUpdate();
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            spacebarAction();
+        }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !webbed)
         {
             if(ClickAction != null) ClickAction();
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            _grab.Select();
+            _frog.Deselect();
+            _stick.Deselect();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            _stick.Select();
+            _frog.Deselect();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            _frog.Select();
+            _stick.Deselect();
+        }
+
 
         if (_blurredTimer > 0)
         {
@@ -90,26 +108,11 @@ public class PlayerActions : MonoBehaviour
     private void FixedUpdate()
     {
         if (CameraScript.instance.isOnBoard) return;
-        if (webbedTimer <= 0) player.OnFixedUpdate();
+        if (webbed) return;
+        player.OnFixedUpdate();
     }
 
-    public void GetWebbed(float t)
-    {
-        webbedTimer = t;
-        _webbedImage.SetActive(true);
-    }
-
-    private void EscapeWeb()
-    {
-        if (webbedTimer > 0)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                float f = UnityEngine.Random.Range(0f, 3f);
-                webbedTimer -= f;
-            }
-        }
-    }
+    
 
     public void GetBlurred(float t)
     {

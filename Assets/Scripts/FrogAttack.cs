@@ -38,34 +38,12 @@ public class FrogAttack : MonoBehaviour
             PlayerActions.instance.availableWeapons[PlayerActions.WeaponType.Frog] = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            if (PlayerActions.instance.availableWeapons.ContainsKey(PlayerActions.WeaponType.Frog) && PlayerActions.instance.selectedWeapon != PlayerActions.WeaponType.Frog)
-            {
-                PlayerActions.instance.ClickAction += Attack;
-                PlayerActions.instance.selectedWeapon = PlayerActions.WeaponType.Frog;
-                _meshObject.SetActive(true);
-            }
-        } 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            if (PlayerActions.instance.availableWeapons.ContainsKey(PlayerActions.WeaponType.Stick))
-            {
-                PlayerActions.instance.ClickAction -= Attack;
-                _meshObject.SetActive(false);
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-                _meshObject.SetActive(false);
-                PlayerActions.instance.ClickAction -= Attack;
-        }
     }
 
     private IEnumerator Tongue()
     {
         LineRenderer tongueNow = Instantiate(_tongue, _tonguePoint);
-        EnemyBase enemy = null;
+        IGrabbableByFrog grabbableThing = null;
         float blend = 0;
 
 
@@ -83,10 +61,10 @@ public class FrogAttack : MonoBehaviour
 
         if (Physics.Raycast(_frogRay, out RaycastHit hit, _frogRayLength, _layerMask))
         {
-            if (hit.collider.gameObject.TryGetComponent(out enemy))
+            if (hit.collider.gameObject.TryGetComponent(out grabbableThing))
             {
-                enemy.PermaStun();
-                foreach (Collider c in enemy.GetComponents<Collider>())
+                grabbableThing.Grab();
+                foreach (Collider c in grabbableThing.GetColliders())
                 {
                     c.enabled = false;
                 }
@@ -100,16 +78,17 @@ public class FrogAttack : MonoBehaviour
             
             tongueNow.SetPosition(0, _tonguePoint.position);
             tongueNow.SetPosition(1, Vector3.Lerp(_tonguePoint.position, _tongueEnd, blend));
-            if(enemy != null) enemy.transform.position = Vector3.Lerp(_tonguePoint.position, _tongueEnd, blend);
+            if(grabbableThing != null) grabbableThing.GetTransform().position = Vector3.Lerp(_tonguePoint.position, _tongueEnd, blend);
             blend -= Time.deltaTime * 5;
             yield return null;
         }
 
-        if(enemy != null)
+        if(grabbableThing != null)
         {
             _frogCooldown = _maxCooldown;
             PlayerActions.instance.availableWeapons[PlayerActions.WeaponType.Frog] = false;
-            enemy.Die();
+            grabbableThing.End();
+
             StartCoroutine(Chew());
         }
 
@@ -119,7 +98,7 @@ public class FrogAttack : MonoBehaviour
 
     private void Attack()
     {
-        if (PlayerActions.instance.webbedTimer > 0 || !PlayerActions.instance.availableWeapons[PlayerActions.WeaponType.Frog]) return;
+        if (PlayerActions.instance.webbed || !PlayerActions.instance.availableWeapons[PlayerActions.WeaponType.Frog]) return;
         if (_tongueCoroutine == null)
         {
             _frogRay = new Ray(_tonguePoint.position, Camera.main.transform.forward);
@@ -133,6 +112,21 @@ public class FrogAttack : MonoBehaviour
             }
             _tongueCoroutine = StartCoroutine(Tongue());
         }
+    }
+
+    public void Select()
+    {
+        if (PlayerActions.instance.availableWeapons.ContainsKey(PlayerActions.WeaponType.Frog) && PlayerActions.instance.selectedWeapon != PlayerActions.WeaponType.Frog)
+        {
+            PlayerActions.instance.ClickAction = Attack;
+            PlayerActions.instance.selectedWeapon = PlayerActions.WeaponType.Frog;
+            _meshObject.SetActive(true);
+        }
+    }
+
+    public void Deselect()
+    {
+        if (PlayerActions.instance.availableWeapons.ContainsKey(PlayerActions.WeaponType.Frog)) _meshObject.SetActive(false);
     }
 
     private IEnumerator Chew()
